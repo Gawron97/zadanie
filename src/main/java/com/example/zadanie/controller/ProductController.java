@@ -1,6 +1,8 @@
 package com.example.zadanie.controller;
 
+import com.example.zadanie.dto.ProductDTO;
 import com.example.zadanie.entity.Product;
+import com.example.zadanie.service.CategoryService;
 import com.example.zadanie.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
 
     private final ProductService productService;
+    private final CategoryService categoryService;
 
     @GetMapping("/all")
     public String showProducts(Model model) {
@@ -24,13 +27,14 @@ public class ProductController {
 
     @GetMapping("/add")
     public String getAddProductForm(Model model, @RequestParam(required = false) String error) {
-        model.addAttribute("newProduct", new Product());
+        model.addAttribute("newProduct", new ProductDTO());
         model.addAttribute("error", error);
+        model.addAttribute("categories", categoryService.getCategories());
         return "add_product";
     }
 
     @PostMapping("/add")
-    public String addProduct(@ModelAttribute("newProduct") @Valid Product product, BindingResult bindingResult) {
+    public String addProduct(@ModelAttribute("newProduct") @Valid ProductDTO product, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             return "add_product";
         }
@@ -50,13 +54,14 @@ public class ProductController {
 
     @GetMapping("/edit/{id}")
     public String getProductEdit(Model model, @PathVariable Long id, @RequestParam(required = false) String error) {
-        model.addAttribute("product", productService.getProduct(id));
+        model.addAttribute("product", ProductDTO.of(productService.getProduct(id)));
         model.addAttribute("error", error);
+        model.addAttribute("categories", categoryService.getCategories());
         return "edit_product";
     }
 
     @PostMapping("/edit/{id}")
-    public String editProduct(@PathVariable Long id, @ModelAttribute("product") @Valid Product product, BindingResult bindingResult) {
+    public String editProduct(@PathVariable Long id, @ModelAttribute("product") @Valid ProductDTO product, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             return "edit_product";
         }

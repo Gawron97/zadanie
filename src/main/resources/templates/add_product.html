@@ -20,8 +20,10 @@
   <span th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}">Invalid weight</span><br>
   <label>Price: </label><input type="text" th:field="*{price}" /><br>
   <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Invalid price</span><br>
-  <label>Category: </label><input type="text" th:field="*{category}" /><br>
-  <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Invalid category</span><br>
+  <label>Category: </label>
+  <select th:field="*{categoryId}">
+    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+  </select><br>
   <input type="submit" value="Add Product" />
 </form>
 

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit category</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        span {
+            color: #d9534f;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input[type="submit"] {
+            background-color: #5cb85c;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        i {
+            color: #d9534f;
+        }
+    </style>
+
+</head>
+<body>
+<form th:action="@{/categories/edit/{id}(id=${category.id})}" method="post" th:object="${category}">
+    <label>Name: </label><input type="text" th:field="*{name}" /><br>
+    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Invalid name</span><br>
+    <input type="submit" value="Edit Category" />
+</form>
+
+<i th:text="${error}"></i>
+</body>
+</html>

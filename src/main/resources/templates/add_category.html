@@ -1,14 +1,24 @@
+<!-- resources/templates/add_product.html -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Edit product</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Category</title>
 
   <style>
     body {
       font-family: Arial, sans-serif;
       background-color: #f4f4f4;
       margin: 20px;
+    }
+
+    select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
     }
 
     form {
@@ -54,21 +64,19 @@
   </style>
 
 </head>
+
 <body>
-<form th:action="@{/products/edit/{id}(id=${product.id})}" method="post" th:object="${product}">
+
+<h2>Add Category</h2>
+
+<form th:action="@{/categories/add}" method="post" th:object="${newCategory}">
   <label>Name: </label><input type="text" th:field="*{name}" /><br>
   <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Invalid name</span><br>
-  <label>Weight: </label><input type="text" th:field="*{weight}" /><br>
-  <span th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}">Invalid weight</span><br>
-  <label>Price: </label><input type="text" th:field="*{price}" /><br>
-  <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Invalid price</span><br>
-  <label>Category: </label>
-  <select th:field="*{categoryId}">
-    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
-  </select><br>
-  <input type="submit" value="Edit Product" />
+  <input type="submit" value="Add Category" />
 </form>
 
 <i th:text="${error}"></i>
+
 </body>
+
 </html>

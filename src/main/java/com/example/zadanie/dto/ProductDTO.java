@@ -1,7 +1,7 @@
-package com.example.zadanie.entity;
+package com.example.zadanie.dto;
 
-import com.example.zadanie.dto.ProductDTO;
-import jakarta.persistence.*;
+import com.example.zadanie.entity.Product;
+import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -9,14 +9,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Builder
-@Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
+public class ProductDTO {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank
     private String name;
@@ -24,14 +22,19 @@ public class Product {
     private double weight;
     @Max(value = 10000)
     private double price;
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Category category;
+    @Nonnull
+    private String categoryId;
+    private String categoryName;
 
-    public static Product of(ProductDTO product) {
-        return Product.builder()
+    public static ProductDTO of(Product product) {
+        return ProductDTO.builder()
+                .id(product.getId())
                 .name(product.getName())
                 .weight(product.getWeight())
                 .price(product.getPrice())
+                .categoryId(product.getCategory().getId())
+                .categoryName(product.getCategory().getName())
                 .build();
     }
+
 }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Product Details</title>
+    <title>Category Details</title>
 
     <style>
         body {
@@ -40,13 +40,16 @@
 </head>
 <body>
 
-  <form th:object="${product}">
-    <label>ID: </label><span th:text="${product.getId()}"></span><br>
-    <label>Name: </label><span th:text="${product.getName()}"></span><br>
-    <label>Weight: </label><span th:text="${product.getWeight()}"></span><br>
-    <label>Price: </label><span th:text="${product.getPrice()}"></span><br>
-    <label>Category: </label><span th:text="${product.getCategory().name}"></span><br>
-  </form>
+<form th:object="${category}">
+    <label>ID: </label><span th:text="${category.id}"></span><br>
+    <label>Name: </label><span th:text="${category.name}"></span><br>
+    <label>Products: </label>
+    <ul>
+        <li th:each="product : ${category.products}">
+            <span th:text="${product.name}"></span>
+        </li>
+    </ul>
+</form>
 
 </body>
 </html>
