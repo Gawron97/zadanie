@@ -78,6 +78,8 @@
 
 <body>
 
+<div th:insert="menu.html"></div>
+
 
 <h2>Product Table</h2>
 <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/products/add}">Add product</a>
